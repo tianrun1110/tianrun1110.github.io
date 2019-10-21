@@ -40,17 +40,16 @@
 <li>==substring(s,n,len),mid(s,n,len)== 两个函数作用相同，从字符串s中返回一个第n个字符开始、长度为len的字符串</li>
 <li>==locate(str1,str),position(str1 in str),instr(str,str1)== 三个函数作用相同，返回子字符串str1在字符串str中的开始位置（从第几个字符开始）</li>
 <li>==reverst(s)== 将字符串s反转</li>
-<li>==elt(n,str1,str2,str3,…)== 返回第N个字符串<h2 id="日期和时间函数"><a href="#日期和时间函数" class="headerlink" title="日期和时间函数"></a>日期和时间函数</h2></li>
+<li>==elt(n,str1,str2,str3,…)== 返回第N个字符串  <h2 id="日期和时间函数"><a href="#日期和时间函数" class="headerlink" title="日期和时间函数"></a>日期和时间函数</h2></li>
 <li>==curdate(),current_date()== 将当前日期按照”YYYY-MM-DD”或者”YYYYMMDD”格式的值返回，具体格式根据函数用在字符串或是数字语境中而定</li>
 <li>==CURRENT_TIMESTAMP()、LOCALTIME()、NOW()、SYSDATE()==  这四个函数作用相同，返回当前日期和时间值，格式为”YYYY_MM-DD HH:MM:SS”或”YYYYMMDDHHMMSS”，具体格式根据函数用在字符串或数字语境中而定</li>
 <li>==UNIX_TIMESTAMP()、UNIX_TIMESTAMP(date)== 前者返回一个格林尼治标准时间1970-01-01 00:00:00到现在的秒数，后者返回一个格林尼治标准时间1970-01-01 00:00:00到指定时间的秒数</li>
 <li>==FROM_UNIXTIME(date)== 和UNIX_TIMESTAMP互为反函数，把UNIX时间戳转换为普通格式的时间</li>
 <li>==UTC_DATE()和UTC_TIME()== 前者返回当前UTC（世界标准时间）日期值，其格式为”YYYY-MM-DD”或”YYYYMMDD”，后者返回当前UTC时间值，其格式为”YYYY-MM-DD”或”YYYYMMDD”。具体使用哪种取决于函数用在字符串还是数字语境中</li>
-<li></li>
 </ol>
 ]]></content>
       <tags>
-        <tag>m y s q l</tag>
+        <tag>mysql</tag>
       </tags>
   </entry>
 </search>
