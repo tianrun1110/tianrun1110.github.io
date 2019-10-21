@@ -264,7 +264,7 @@ body {
   background-size: 100%;
 }
 .main-inner {
-  opacity: 0.8;
+  opacity: 0.9;
 }
 .table-container {
   -webkit-overflow-scrolling: touch;
@@ -1160,7 +1160,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #f10fd0;
+  background: #ff3936;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
