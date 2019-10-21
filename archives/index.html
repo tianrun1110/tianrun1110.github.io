@@ -382,9 +382,14 @@
                 console.log('Failed to save visitor count', error);
               })
           } else {
-              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
-              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
-            
+              Counter('post', '/classes/Counter', { title: title, url: url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.log('Failed to create', error);
+                });
           }
         })
         .catch(error => {
@@ -427,15 +432,15 @@
     }
   }
 
-  fetch('https://app-router.leancloud.cn/2/route?appId=94r0EYM9i7Km3secE0WPdXBk-gzGzoHsz')
+  fetch('https://app-router.leancloud.cn/2/route?appId=NeOJ4J8mlI1twzlzk9tsXQRk-gzGzoHsz')
     .then(response => response.json())
     .then(({ api_server }) => {
       var Counter = (method, url, data) => {
         return fetch(`https://${api_server}/1.1${url}`, {
           method: method,
           headers: {
-            'X-LC-Id': '94r0EYM9i7Km3secE0WPdXBk-gzGzoHsz',
-            'X-LC-Key': 'BBM8xHf3MvSYyDFDKqomxmK0',
+            'X-LC-Id': 'NeOJ4J8mlI1twzlzk9tsXQRk-gzGzoHsz',
+            'X-LC-Key': 'SbA09AUT3HK1ANre8u0ieXmw',
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(data)
