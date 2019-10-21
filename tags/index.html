@@ -384,7 +384,7 @@
                 console.log('Failed to save visitor count', error);
               })
           } else {
-              Counter('post', '/classes/Counter', { title: title, url: decode(url), time: 1 })
+              Counter('post', '/classes/Counter', { title: title, url: decodeURI(url), time: 1 })
                 .then(response => response.json())
                 .then(() => {
                   leancloudSelector(url).innerText = 1;
