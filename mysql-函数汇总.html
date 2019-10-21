@@ -246,11 +246,11 @@
             </span>
 
           
-            <span id="/mysql-%E5%87%BD%E6%95%B0%E6%B1%87%E6%80%BB.html" class="post-meta-item leancloud_visitors" data-flag-title="mysql 函数汇总" title="阅读次数">
+            <span id="/mysql-%E5%87%BD%E6%95%B0%E6%B1%87%E6%80%BB.html" class="post-meta-item leancloud_visitors" data-flag-title="mysql 函数汇总" title="热度">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
-              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="post-meta-item-text">热度：</span>
               <span class="leancloud-visitors-count"></span>
             </span>
   
@@ -472,7 +472,7 @@
                 console.log('Failed to save visitor count', error);
               })
           } else {
-              Counter('post', '/classes/Counter', { title: title, url: url, time: 1 })
+              Counter('post', '/classes/Counter', { title: title, url: decode(url), time: 1 })
                 .then(response => response.json())
                 .then(() => {
                   leancloudSelector(url).innerText = 1;
