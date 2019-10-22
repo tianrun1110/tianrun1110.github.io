@@ -479,7 +479,7 @@
             var item = results[i];
             var url = item.url;
             var time = item.time;
-            leancloudSelector(url).innerText = time;
+            leancloudSelector(encodeURI(url)).innerText = time;
           }
           for (var i = 0; i < entries.length; i++) {
             var url = entries[i];
