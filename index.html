@@ -291,40 +291,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>数据库存储引擎是数据库底层软件组织，数据库管理系统（DBMS）使用数据库引擎进行创建、查询、更新和删除数据。不同的存储引擎提供不同的存储机制、索引技巧、锁定水平等功能。使用不同的存储引擎还能获得特定的功能。现在许多不同的数据库管理系统都支持不同的数据引擎。MySQL的核心就是存储引擎。</p>
-<h1 id="存储引擎查看"><a href="#存储引擎查看" class="headerlink" title="存储引擎查看"></a>存储引擎查看</h1><p>mysql给开发者提供了 查询存储引擎的功能。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show ENGINES;</span><br></pre></td></tr></table></figure>
-<p>查看结果：(我用的是navicat)</p>
-<p><img src="/images/pasted-0.png" alt="upload successful"></p>
-<p>看到MySQL给用户提供了这么多的存储引擎。包括处理事务安全表的引擎和处理非事务安全表引擎。</p>
-<p>想查看数据库默认使用的是哪个引擎，通过命令:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show VARIABLES like &apos;storage_engine&apos;;</span><br></pre></td></tr></table></figure>
-<p>在MySQL中，不需要在整个服务器中使用同一种存储引擎，针对具体的要求，可以对每一个表使用不同的存储引擎。Support列的值表示某种引擎是否能使用：YES表示可以使用、NO表示不能使用、DEFAULT表示该引擎为当前默认的存储引擎 。下面来看一下其中几种常用的引擎。</p>
-<h2 id="InnoDB存储引擎"><a href="#InnoDB存储引擎" class="headerlink" title="InnoDB存储引擎"></a>InnoDB存储引擎</h2><p>InnoDB是事务型数据库的首选引擎，支持事务安全表（ACID），支持行锁定和外键，上图也看到了，InnoDB是默认的MySQL引擎。InnoDB主要特性有：</p>
-<ol>
-<li>InnoDB给MySQL提供了具有提交、回滚和崩溃恢复能力的事物安全（ACID兼容）存储引擎。InnoDB锁定在行级并且也在SELECT语句中提供一个类似Oracle的非锁定读。这些功能增加了多用户部署和性能。在SQL查询中，可以自由地将InnoDB类型的表和其他MySQL的表类型混合起来，甚至在同一个查询中也可以混合</li>
-<li>InnoDB是为处理巨大数据量的最大性能设计。它的CPU效率可能是任何其他基于磁盘的关系型数据库引擎锁不能匹敌的</li>
-<li>InnoDB存储引擎完全与MySQL服务器整合，InnoDB存储引擎为在主内存中缓存数据和索引而维持它自己的缓冲池。InnoDB将它的表和索引在一个逻辑表空间中，表空间可以包含数个文件（或原始磁盘文件）。这与MyISAM表不同，比如在MyISAM表中每个表被存放在分离的文件中。InnoDB表可以是任何尺寸，即使在文件尺寸被限制为2GB的操作系统上</li>
-<li>InnoDB支持外键完整性约束，存储表中的数据时，每张表的存储都按主键顺序存放，如果没有显示在表定义时指定主键，InnoDB会为每一行生成一个6字节的ROWID，并以此作为主键</li>
-<li>InnoDB被用在众多需要高性能的大型数据库站点上</li>
-</ol>
-<h2 id="MyISAM存储引擎"><a href="#MyISAM存储引擎" class="headerlink" title="MyISAM存储引擎"></a>MyISAM存储引擎</h2><p>MyISAM基于ISAM存储引擎，并对其进行扩展。它是在Web、数据仓储和其他应用环境下最常使用的存储引擎之一。MyISAM拥有较高的插入、查询速度，但不支持事物。MyISAM主要特性有：</p>
-<ol>
-<li>大文件（达到63位文件长度）在支持大文件的文件系统和操作系统上被支持</li>
-<li>当把删除和更新及插入操作混合使用的时候，动态尺寸的行产生更少碎片。这要通过合并相邻被删除的块，以及若下一个块被删除，就扩展到下一块自动完成</li>
-<li>每个MyISAM表最大索引数是64，这可以通过重新编译来改变。每个索引最大的列数是16</li>
-<li>最大的键长度是1000字节，这也可以通过编译来改变，对于键长度超过250字节的情况，一个超过1024字节的键将被用上</li>
-<li>BLOB和TEXT列可以被索引</li>
-<li>NULL被允许在索引的列中，这个值占每个键的0~1个字节</li>
-<li>所有数字键值以高字节优先被存储以允许一个更高的索引压缩</li>
-<li>每个MyISAM类型的表都有一个AUTO_INCREMENT的内部列，当INSERT和UPDATE操作的时候该列被更新，同时AUTO_INCREMENT列将被刷新。所以说，MyISAM类型表的AUTO_INCREMENT列更新比InnoDB类型的AUTO_INCREMENT更快</li>
-<li>可以把数据文件和索引文件放在不同目录</li>
-<li>每个字符列可以有不同的字符集</li>
-<li>有VARCHAR的表可以固定或动态记录长度</li>
-<li>VARCHAR和CHAR列可以多达64KB</li>
-</ol>
-<p>使用MyISAM引擎创建数据库，将产生3个文件。文件的名字以表名字开始，扩展名之处文件类型：frm文件存储表定义、数据文件的扩展名为.MYD（MYData）、索引文件的扩展名时.MYI（MYIndex）</p>
-
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>数据库存储引擎是数据库底层软件组织，数据库管理系统（DBMS）使用数据库引擎进行创建、查询、更新和删除数据。不同的存储引擎提供不同的存储机制、索引技巧、锁定水平等功能。使用不同的存储引擎还能获得特定的功能。现在许多不同的数据库管理系统都支持不同的数据引擎。MySQL的核心就是存储引擎。</p><h1 id="存储引擎查看"><a href="#存储引擎查看" class="headerlink" title="存储引擎查看"></a>存储引擎查看</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/%E5%9B%9B%E7%A7%8Dmysql%E7%9A%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -425,21 +400,17 @@
       
           <div class="note info">
             <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>MySQL提供了众多的强大的功能，方便易用的函数，使用这些函数，可以极大的提高用户对于数据库的管理效率，更加的灵活的满足不同的用户的需求。</p>
-          </div>
-
-<div class="note success">
+          </div><div class="note success">
             <h4 id="数学函数"><a href="#数学函数" class="headerlink" title="数学函数"></a>数学函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">==abs（x）== 返回x的绝对值。</span><br><span class="line">==pi（）== 返回圆周率n，默认显示6为小数。</span><br><span class="line">==sqrt（x）== 返回非负数x的二次方根</span><br><span class="line">==mod（x，y）== 返回x被y除后的余数</span><br><span class="line">==ceil（x），ceiling（x）== 返回不小于x的最小整数</span><br><span class="line">==floor（x）== 返回不大于x的最大整数</span><br><span class="line">==round（x），round（x，y）== 前者返回最近于x的整数（四舍五入）；后者返回最接近于x的数，其值保留到小数点后面y位，若y为负值，则将保留到x到小数点左边y位</span><br><span class="line">==sign（x）== 返回参数x的符号，-1表示负数，0表示0，1表示正数</span><br><span class="line">==pow（x，y），power（x，y）== 返回x的y次乘方的值</span><br><span class="line">==exp（x）== e的x次乘方的值</span><br><span class="line">==log（x）== x相对于基数e的对数</span><br><span class="line">==log10（x）== 返回x的基数10的对数</span><br><span class="line">==radians（x）== x由角度转化为弧度的值</span><br><span class="line">==degrees（x）== x由弧度转化为角度的值</span><br><span class="line">==sin（x），asin（x）== 前者返回x的正弦，其中x为给定的弧度值；后者返回x的反正弦值，x为正弦</span><br><span class="line">==cos（x），acos（x）== 前者返回x的余弦，其中x为给定的弧度值；后者返回x的反余弦值，x为余弦</span><br><span class="line">==tan（x），atan（x）== 前者返回x的正切，其中x为给定的弧度值；后者返回x的反正切值，x为正切</span><br><span class="line">==cot（x）== 返回给定弧度值x的余切</span><br></pre></td></tr></table></figure>
           </div>
-
-<div class="note success">
-            <h4 id="字符串函数"><a href="#字符串函数" class="headerlink" title="字符串函数"></a>字符串函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">==char_length（str）== 计算字符串字符个数</span><br><span class="line">==concat（s1，s2，...）== 返回连接参数产生的字符串，一个或多个待拼接的内容，任意一个为NULL则返回值为NULL、</span><br><span class="line">==concat_ws(x,s1,s2,...) == 返回多个字符串拼接之后的字符串，每个字符串之间有一个x</span><br><span class="line">==insert(s1,x,len,s2)== 返回字符串s1，其子字符串起始于位置x，被字符串s2取代len个字符</span><br><span class="line">==lower(str)和lcast(str);upper(str)和ucast(str)== 前两者将str中的字母全部转换成小写，后两者将字符串中的字母全部转换成大写</span><br><span class="line">==left(s,n),right(s,n)== 前者返回字符串s从最左边开始的n个字符，后者返回字符串s从最右边开始的n个字符</span><br><span class="line">==lpad(s1,len,s2),rpad(s1,len,s2)== 前者返回s1，其左边由字符串s2填补到len字符长度，假如s1的长度大于len，则返回值被缩短至len字符；前者返回s1，其右边由字符串s2填补到len字符长度，假如s1的长度大于len，则返回值被缩短至len字符</span><br><span class="line">==ltrim(s),rtrim(s)== 前者返回字符串s，其左边所有空格被删除；后者返回字符串s，其右边所有空格被删除</span><br><span class="line">==trim(s)== 返回字符串s删除了两边空格之后的字符串</span><br><span class="line">==trim(s1 from s)== 删除字符串s两端所有子字符串s1，未指定s1的情况下则默认删除空格</span><br><span class="line">==repeat(s,n)== 返回一个由重复字符串s组成的字符串，字符串s的数目等于n</span><br><span class="line">==space(n)== 返回一个由n个空格组成的字符串</span><br><span class="line">==replace(s,s1,s2)== 返回一个字符串，用字符串s2替代字符串s中所有的字符串s1</span><br><span class="line">==strcmp(s1,s2)== 若s1和s2中所有的字符串都相同，则返回0；根据当前分类次序，第一个参数小于第二个则返回-1，其他情况返回1</span><br><span class="line">==substring(s,n,len),mid(s,n,len)== 两个函数作用相同，从字符串s中返回一个第n个字符开始、长度为len的字符串</span><br><span class="line">==locate(str1,str),position(str1 in str),instr(str,str1)== 三个函数作用相同，返回子字符串str1在字符串str中的开始位置（从第几个字符开始）</span><br><span class="line">==reverst(s)== 将字符串s反转</span><br><span class="line">==elt(n,str1,str2,str3,...)== 返回第N个字符串 </span><br></pre></td></tr></table></figure>
-          </div>
-
-<div class="note success">
-            <h4 id="日期和时间函数"><a href="#日期和时间函数" class="headerlink" title="日期和时间函数"></a>日期和时间函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">==curdate(),current_date()== 将当前日期按照&quot;YYYY-MM-DD&quot;或者&quot;YYYYMMDD&quot;格式的值返回，具体格式根据函数用在字符串或是数字语境中而定</span><br><span class="line">==CURRENT_TIMESTAMP()、LOCALTIME()、NOW()、SYSDATE()==  这四个函数作用相同，返回当前日期和时间值，格式为&quot;YYYY_MM-DD HH:MM:SS&quot;或&quot;YYYYMMDDHHMMSS&quot;，具体格式根据函数用在字符串或数字语境中而定</span><br><span class="line">==UNIX_TIMESTAMP()、UNIX_TIMESTAMP(date)== 前者返回一个格林尼治标准时间1970-01-01 00:00:00到现在的秒数，后者返回一个格林尼治标准时间1970-01-01 00:00:00到指定时间的秒数</span><br><span class="line">==FROM_UNIXTIME(date)== 和UNIX_TIMESTAMP互为反函数，把UNIX时间戳转换为普通格式的时间</span><br><span class="line">==UTC_DATE()和UTC_TIME()== 前者返回当前UTC（世界标准时间）日期值，其格式为&quot;YYYY-MM-DD&quot;或&quot;YYYYMMDD&quot;，后者返回当前UTC时间值，其格式为&quot;YYYY-MM-DD&quot;或&quot;YYYYMMDD&quot;。具体使用哪种取决于函数用在字符串还是数字语境中</span><br></pre></td></tr></table></figure>
-          </div>
-
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/mysql-%E5%87%BD%E6%95%B0%E6%B1%87%E6%80%BB.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
