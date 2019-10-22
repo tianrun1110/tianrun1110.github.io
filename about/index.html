@@ -407,7 +407,7 @@
         return element.getAttribute('id').trim();
       });
 
-      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': decodeURI(entries) } })}`)
         .then(response => response.json())
         .then(({ results }) => {
           if (results.length === 0) {
