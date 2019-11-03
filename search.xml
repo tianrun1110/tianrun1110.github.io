@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>ThreadLocal的作用及使用</title>
+    <url>/ThreadLocal%E7%9A%84%E4%BD%9C%E7%94%A8%E5%8F%8A%E4%BD%BF%E7%94%A8.html</url>
+    <content><![CDATA[<p><mark>ThreadLocal不是用来解决共享对象的多线程访问问题的</mark>，通过ThreadLocal的set()方法设置到线程ThreadLocal.ThreadLocalMap里的是线程自己要存储的对象。其他的线程是不需要访问的，也不能进行访问。各个线程中的ThreadLocal.ThreadLocalMap以及ThreadLocal.ThreadLocal中的值都是不同的对象。  </p><a id="more"></a>
+<h5 id="threadLocal的简单使用："><a href="#threadLocal的简单使用：" class="headerlink" title="threadLocal的简单使用："></a>threadLocal的简单使用：</h5><p>首先ThreadLocal肯定是全局共享的：  </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tools</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> ThreadLocal&lt;String&gt; t1 = <span class="keyword">new</span> ThreadLocal&lt;&gt;();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>写一个线程往线程里面塞值：  </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadLocalThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> AtomicInteger ai = <span class="keyword">new</span> AtomicInteger();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ThreadLocalThread</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="number">3</span> ; i++)&#123;</span><br><span class="line">                Tools.t1.set(ai.addAndGet(<span class="number">1</span>) +<span class="string">""</span>);</span><br><span class="line">                System.out.println(<span class="keyword">this</span>.getName() + <span class="string">"get----value------&gt;"</span> + Tools.t1.get());</span><br><span class="line">                Thread.sleep(<span class="number">200</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ThreadLocalThread threadLocalThread = <span class="keyword">new</span> ThreadLocalThread(<span class="string">"Thread1"</span>);</span><br><span class="line">        ThreadLocalThread threadLocalThread1 = <span class="keyword">new</span> ThreadLocalThread(<span class="string">"Thread2"</span>);</span><br><span class="line">        ThreadLocalThread threadLocalThread2 = <span class="keyword">new</span> ThreadLocalThread(<span class="string">"Thread3"</span>);</span><br><span class="line">        threadLocalThread.start();</span><br><span class="line">        threadLocalThread1.start();</span><br><span class="line">        threadLocalThread2.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Thread1get----value------&gt;<span class="number">1</span></span><br><span class="line">Thread2get----value------&gt;<span class="number">2</span></span><br><span class="line">Thread3get----value------&gt;<span class="number">3</span></span><br><span class="line">Thread1get----value------&gt;<span class="number">5</span></span><br><span class="line">Thread3get----value------&gt;<span class="number">6</span></span><br><span class="line">Thread2get----value------&gt;<span class="number">4</span></span><br><span class="line">Thread1get----value------&gt;<span class="number">7</span></span><br><span class="line">Thread2get----value------&gt;<span class="number">9</span></span><br><span class="line">Thread3get----value------&gt;<span class="number">8</span></span><br></pre></td></tr></table></figure>
+<p>看到每个线程的里都有自己的String，并且互不影响—-因为绝对不可能出现数字重复的情况。用一个ThreadLocal也可以多次set一个数据，set仅仅表示的是线程的ThreadLocal.ThreadLocalMap中table的某一位置的value被覆盖成你最新设置的那个数据而已，<mark>对于同一个ThreadLocal对象而言，set后，table中绝不会多出一个数据。</mark>  </p>
+<h5 id="ThreadLocal总结"><a href="#ThreadLocal总结" class="headerlink" title="ThreadLocal总结"></a>ThreadLocal总结</h5><ol>
+<li><mark>ThreadLocal不是集合</mark>，它不存储任何内容，真正存储数据的集合在Thread中。<mark>ThreadLocal只是一个工具，一个往各个线程的ThreadLocal.ThreadLocalMap中table的某一位置set一个值的工具而已</mark>  </li>
+<li>同步与ThreadLocal是解决多线程中数据访问问题的两种思路，<mark>前者是数据共享的思路，后者是数据隔离的思路</mark>  </li>
+<li>同步是一种以时间换空间的思想，ThreadLocal是一种空间换时间的思想  </li>
+<li>ThreadLocal既然是与线程相关的，那么对于Java Web来讲，ThreadLocal设置的值只在一次请求中有效，是不是和request很像？因为request里面的内容也只在一次请求有效，<br>对比一下二者的区别：<ol>
+<li>ThreadLocal只能存一个值，一个Request由于是Map形式的，可以用key-value形式存多个值</li>
+<li>ThreadLocal一般用在框架，Request一般用在表示层、Action、Servlet</li>
+</ol>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>多线程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>四种mysql的存储引擎</title>
     <url>/%E5%9B%9B%E7%A7%8Dmysql%E7%9A%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.html</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>数据库存储引擎是数据库底层软件组织，数据库管理系统（DBMS）使用数据库引擎进行创建、查询、更新和删除数据。不同的存储引擎提供不同的存储机制、索引技巧、锁定水平等功能。使用不同的存储引擎还能获得特定的功能。现在许多不同的数据库管理系统都支持不同的数据引擎。MySQL的核心就是存储引擎。</p><h1 id="存储引擎查看"><a href="#存储引擎查看" class="headerlink" title="存储引擎查看"></a>存储引擎查看</h1><a id="more"></a>
