@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>二叉树的使用（堆排序）</title>
+    <url>/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%88%E5%A0%86%E6%8E%92%E5%BA%8F%EF%BC%89.html</url>
+    <content><![CDATA[<h4 id="堆排序的基本介绍"><a href="#堆排序的基本介绍" class="headerlink" title="堆排序的基本介绍"></a>堆排序的基本介绍</h4><ol>
+<li>堆排序是利用<strong>堆</strong>这种数据结构而设计的一种排序算法，堆排序是一种<strong>选择排序</strong>，它的最坏、最好平均时间复杂度均为O(nlogn)，它也是不稳定排序。</li>
+<li>堆是具有以下性质的完全二叉树：每个节点的值都大于或等于其左右孩子节点的值，称为大顶堆，注意：没有要求节点的做孩子的值和右孩子的值的大小关系。</li>
+<li>每个节点的值都小于或等于其左右孩子节点的值，称为小顶堆。</li>
+</ol><a id="more"></a>
+<img width="80%" src="/images/pasted-5.png">
+
+<p><code>大顶堆特点：arr[i]&gt;=arr[2*i+1] &amp;&amp; arr[i] &gt;= arr[2*i+2] ，i对应第一个节点，从0开始编号。  
+小顶堆特点：arr[i]&lt;=arr[2*i+1] &amp;&amp; arr[i] &lt;= arr[2*i+2]。</code><br>一般升序采用大顶堆，降序采用小顶堆</p>
+<h4 id="堆排序的基本思想"><a href="#堆排序的基本思想" class="headerlink" title="堆排序的基本思想"></a>堆排序的基本思想</h4><ol>
+<li>将待排序序列构成一个大顶堆</li>
+<li>此时，整个序列的最大值就是堆顶的根节点。</li>
+<li>将其与末尾元素进行交换，此时末尾就是最大值。</li>
+<li>然后将剩余n-1个元素重新构造成一个堆，这样会得到n个元素的次小值。如此反复执行，便能得到一个有序序列了。  </li>
+</ol>
+<p><strong>举一个例子</strong><br>一个数组<code>{4,6,8,5,9}</code>进行升序排序<br><img width="70%" src="/images/pasted-6.png"></p>
+<p>此时从最后一个非叶子节点开始 根据公式 arr.length/2-1 = 5/2-1 = 1 算出下标 也就是6节点，从左到右，从上到下进行调整。<br><img width="80%" src="/images/pasted-7.png"></p>
+<p>找到第二个非叶子节点4，由于[4，8，9]中9元素最大，则4和6进行交换。<br><img width="80%" src="/images/pasted-8.png"></p>
+<p>这时，交换后「4，5，6」结构又混乱了，继续调整，4和6进行交换<br><img width="80%" src="/images/pasted-9.png"></p>
+<p>这时，我们就已经构造成大顶堆<br>然后将堆顶元素与末尾元素进行交换，使末尾元素最大。<br>将9和4进行替换<br><img width="80%" src="/images/pasted-10.png"></p>
+<p>然后再调整堆将第二大的元素得到，如此反复。  </p>
+<p><code>代码实现</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> erchashu;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HeapSort</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//要求将数组进行升序排序</span></span><br><span class="line">        <span class="keyword">int</span> arr[] = &#123;<span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">9</span>&#125;;</span><br><span class="line"></span><br><span class="line">        heapSort(arr);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">heapSort</span><span class="params">(<span class="keyword">int</span> arr[])</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> temp = <span class="number">0</span>;</span><br><span class="line">        System.out.println(<span class="string">"堆排序"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = arr.length / <span class="number">2</span> -<span class="number">1</span> ; i&gt;=<span class="number">0</span> ; i--)&#123;</span><br><span class="line">            adjustHeap(arr,i , arr.length);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = arr.length - <span class="number">1</span> ; j&gt; <span class="number">0</span> ; j--)&#123;</span><br><span class="line">            temp = arr[j];</span><br><span class="line">            arr[j] = arr[<span class="number">0</span>];</span><br><span class="line">            arr[<span class="number">0</span>] = temp;</span><br><span class="line">            adjustHeap(arr,<span class="number">0</span>,j);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"数组 = "</span> + Arrays.toString(arr));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 将一个数组 （二叉树）  调整为大顶堆   如果升序为大顶堆</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> arr</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> i      表示非叶子节点在数组中的索引</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> length 表示对多少个元素进行调整  ， length 是在逐渐减少的</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">adjustHeap</span><span class="params">(<span class="keyword">int</span> arr[], <span class="keyword">int</span> i, <span class="keyword">int</span> length)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> temp = arr[i]; <span class="comment">//先去除当前元素，保存临时变量</span></span><br><span class="line">        <span class="comment">//开始调整</span></span><br><span class="line">        <span class="comment">// k=i*2+1 k是i节点的左子节点</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> k = i * <span class="number">2</span> + <span class="number">1</span>; k &lt; length; k = k * <span class="number">2</span> + <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (k + <span class="number">1</span> &lt; length &amp;&amp; arr[k] &lt; arr[k + <span class="number">1</span>]) &#123; <span class="comment">//说明左子节点 值 小于 右子节点的值</span></span><br><span class="line">                k++; <span class="comment">// k 指向右子节点</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(arr[k] &gt; temp)&#123;<span class="comment">// 如果子节点大于父节点</span></span><br><span class="line">                arr[i] = arr[k]; <span class="comment">// 把较大的值赋给当前节点</span></span><br><span class="line">                i = k;  <span class="comment">// 继续循环比较</span></span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//for 循环结束后，我们已经将以 i 为父节点 的树的最大值，放到了最顶处（局部）</span></span><br><span class="line">        arr[i] = temp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+]]></content>
+      <tags>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>二叉树</title>
     <url>/%E4%BA%8C%E5%8F%89%E6%A0%91.html</url>
     <content><![CDATA[<p>三种遍历方式  </p><ol>
@@ -26,6 +63,9 @@
 <li>如果该二叉树的所有叶子节点都在最后一层或是倒数第二层，而且最后一层的叶子节点在左面连续，倒数第二层的叶子节点在右边连续，则称为完全二叉树</li>
 </ol>
 ]]></content>
+      <tags>
+        <tag>数据结构</tag>
+      </tags>
   </entry>
   <entry>
     <title>线索二叉树</title>
