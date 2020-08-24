@@ -52,18 +52,23 @@
   };
 </script>
 
-  <meta name="description" content="ThreadLocal不是用来解决共享对象的多线程访问问题的，通过ThreadLocal的set()方法设置到线程ThreadLocal.ThreadLocalMap里的是线程自己要存储的对象。其他的线程是不需要访问的，也不能进行访问。各个线程中的ThreadLocal.ThreadLocalMap以及ThreadLocal.ThreadLocal中的值都是不同的对象。">
-<meta name="keywords" content="多线程">
+  <meta name="description" content="基本介绍 给定n个权值作为n个叶子节点，构造一颗二叉树，若该树的带权路径长度（wpl）达到最小，称这样的二叉树为最优二叉树，也称为哈夫曼树（Huffman Tree），也有称为霍夫曼树。 赫夫曼树是带权路径长度最短的树，权值较大的节点离跟较近。 路径和路径的长度：在一棵树中，从一个节点往下可以达到的孩子或孙子节点之间的通路，称为路径。通路中分支的数目称为路径长度。若规定根节点的层数为1，则根节点到">
+<meta name="keywords" content="数据结构">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ThreadLocal的作用及使用">
-<meta property="og:url" content="https:&#x2F;&#x2F;www.tianrunba.com&#x2F;ThreadLocal%E7%9A%84%E4%BD%9C%E7%94%A8%E5%8F%8A%E4%BD%BF%E7%94%A8.html">
+<meta property="og:title" content="赫夫曼树">
+<meta property="og:url" content="https:&#x2F;&#x2F;www.tianrunba.com&#x2F;%E8%B5%AB%E5%A4%AB%E6%9B%BC%E6%A0%91.html">
 <meta property="og:site_name" content="tr_oil的博客">
-<meta property="og:description" content="ThreadLocal不是用来解决共享对象的多线程访问问题的，通过ThreadLocal的set()方法设置到线程ThreadLocal.ThreadLocalMap里的是线程自己要存储的对象。其他的线程是不需要访问的，也不能进行访问。各个线程中的ThreadLocal.ThreadLocalMap以及ThreadLocal.ThreadLocal中的值都是不同的对象。">
+<meta property="og:description" content="基本介绍 给定n个权值作为n个叶子节点，构造一颗二叉树，若该树的带权路径长度（wpl）达到最小，称这样的二叉树为最优二叉树，也称为哈夫曼树（Huffman Tree），也有称为霍夫曼树。 赫夫曼树是带权路径长度最短的树，权值较大的节点离跟较近。 路径和路径的长度：在一棵树中，从一个节点往下可以达到的孩子或孙子节点之间的通路，称为路径。通路中分支的数目称为路径长度。若规定根节点的层数为1，则根节点到">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-03T06:23:14.000Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;www.tianrunba.com&#x2F;images&#x2F;pasted-11.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;www.tianrunba.com&#x2F;images&#x2F;pasted-12.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;www.tianrunba.com&#x2F;images&#x2F;pasted-13.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;www.tianrunba.com&#x2F;images&#x2F;pasted-14.png">
+<meta property="og:updated_time" content="2020-08-24T03:38:48.875Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;www.tianrunba.com&#x2F;images&#x2F;pasted-11.png">
 
-<link rel="canonical" href="https://www.tianrunba.com/ThreadLocal%E7%9A%84%E4%BD%9C%E7%94%A8%E5%8F%8A%E4%BD%BF%E7%94%A8.html">
+<link rel="canonical" href="https://www.tianrunba.com/%E8%B5%AB%E5%A4%AB%E6%9B%BC%E6%A0%91.html">
 
 
 <script id="page-configurations">
@@ -90,7 +95,7 @@
   padding: 0 10px 0 14px;
 }
 </style>
-  <title>ThreadLocal的作用及使用 | tr_oil的博客</title>
+  <title>赫夫曼树 | tr_oil的博客</title>
   
 
 
@@ -233,7 +238,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.tianrunba.com/ThreadLocal%E7%9A%84%E4%BD%9C%E7%94%A8%E5%8F%8A%E4%BD%BF%E7%94%A8.html">
+    <link itemprop="mainEntityOfPage" href="https://www.tianrunba.com/%E8%B5%AB%E5%A4%AB%E6%9B%BC%E6%A0%91.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -246,7 +251,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          ThreadLocal的作用及使用
+          赫夫曼树
         </h1>
 
         <div class="post-meta">
@@ -255,24 +260,19 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2019-11-03 14:02:00 / 修改时间：14:23:14" itemprop="dateCreated datePublished" datetime="2019-11-03T14:02:00+08:00">2019-11-03</time>
+              <time title="创建时间：2020-08-09 16:38:00" itemprop="dateCreated datePublished" datetime="2020-08-09T16:38:00+08:00">2020-08-09</time>
             </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
                 </span>
-            </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-24 11:38:48" itemprop="dateModified" datetime="2020-08-24T11:38:48+08:00">2020-08-24</time>
+              </span>
 
           
-            <span id="/ThreadLocal%E7%9A%84%E4%BD%9C%E7%94%A8%E5%8F%8A%E4%BD%BF%E7%94%A8.html" class="post-meta-item leancloud_visitors" data-flag-title="ThreadLocal的作用及使用" title="热度">
+            <span id="/%E8%B5%AB%E5%A4%AB%E6%9B%BC%E6%A0%91.html" class="post-meta-item leancloud_visitors" data-flag-title="赫夫曼树" title="热度">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -287,8 +287,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/ThreadLocal%E7%9A%84%E4%BD%9C%E7%94%A8%E5%8F%8A%E4%BD%BF%E7%94%A8.html#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/ThreadLocal%E7%9A%84%E4%BD%9C%E7%94%A8%E5%8F%8A%E4%BD%BF%E7%94%A8.html" itemprop="commentCount"></span>
+    <a title="valine" href="/%E8%B5%AB%E5%A4%AB%E6%9B%BC%E6%A0%91.html#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/%E8%B5%AB%E5%A4%AB%E6%9B%BC%E6%A0%91.html" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -298,7 +298,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.1k</span>
+              <span>2.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -317,25 +317,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><mark>ThreadLocal不是用来解决共享对象的多线程访问问题的</mark>，通过ThreadLocal的set()方法设置到线程ThreadLocal.ThreadLocalMap里的是线程自己要存储的对象。其他的线程是不需要访问的，也不能进行访问。各个线程中的ThreadLocal.ThreadLocalMap以及ThreadLocal.ThreadLocal中的值都是不同的对象。  </p><a id="more"></a>
-<h5 id="threadLocal的简单使用："><a href="#threadLocal的简单使用：" class="headerlink" title="threadLocal的简单使用："></a>threadLocal的简单使用：</h5><p>首先ThreadLocal肯定是全局共享的：  </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tools</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> ThreadLocal&lt;String&gt; t1 = <span class="keyword">new</span> ThreadLocal&lt;&gt;();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>写一个线程往线程里面塞值：  </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadLocalThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> AtomicInteger ai = <span class="keyword">new</span> AtomicInteger();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ThreadLocalThread</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="number">3</span> ; i++)&#123;</span><br><span class="line">                Tools.t1.set(ai.addAndGet(<span class="number">1</span>) +<span class="string">""</span>);</span><br><span class="line">                System.out.println(<span class="keyword">this</span>.getName() + <span class="string">"get----value------&gt;"</span> + Tools.t1.get());</span><br><span class="line">                Thread.sleep(<span class="number">200</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ThreadLocalThread threadLocalThread = <span class="keyword">new</span> ThreadLocalThread(<span class="string">"Thread1"</span>);</span><br><span class="line">        ThreadLocalThread threadLocalThread1 = <span class="keyword">new</span> ThreadLocalThread(<span class="string">"Thread2"</span>);</span><br><span class="line">        ThreadLocalThread threadLocalThread2 = <span class="keyword">new</span> ThreadLocalThread(<span class="string">"Thread3"</span>);</span><br><span class="line">        threadLocalThread.start();</span><br><span class="line">        threadLocalThread1.start();</span><br><span class="line">        threadLocalThread2.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>结果：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Thread1get----value------&gt;<span class="number">1</span></span><br><span class="line">Thread2get----value------&gt;<span class="number">2</span></span><br><span class="line">Thread3get----value------&gt;<span class="number">3</span></span><br><span class="line">Thread1get----value------&gt;<span class="number">5</span></span><br><span class="line">Thread3get----value------&gt;<span class="number">6</span></span><br><span class="line">Thread2get----value------&gt;<span class="number">4</span></span><br><span class="line">Thread1get----value------&gt;<span class="number">7</span></span><br><span class="line">Thread2get----value------&gt;<span class="number">9</span></span><br><span class="line">Thread3get----value------&gt;<span class="number">8</span></span><br></pre></td></tr></table></figure>
-<p>看到每个线程的里都有自己的String，并且互不影响—-因为绝对不可能出现数字重复的情况。用一个ThreadLocal也可以多次set一个数据，set仅仅表示的是线程的ThreadLocal.ThreadLocalMap中table的某一位置的value被覆盖成你最新设置的那个数据而已，<mark>对于同一个ThreadLocal对象而言，set后，table中绝不会多出一个数据。</mark>  </p>
-<h5 id="ThreadLocal总结"><a href="#ThreadLocal总结" class="headerlink" title="ThreadLocal总结"></a>ThreadLocal总结</h5><ol>
-<li><mark>ThreadLocal不是集合</mark>，它不存储任何内容，真正存储数据的集合在Thread中。<mark>ThreadLocal只是一个工具，一个往各个线程的ThreadLocal.ThreadLocalMap中table的某一位置set一个值的工具而已</mark>  </li>
-<li>同步与ThreadLocal是解决多线程中数据访问问题的两种思路，<mark>前者是数据共享的思路，后者是数据隔离的思路</mark>  </li>
-<li>同步是一种以时间换空间的思想，ThreadLocal是一种空间换时间的思想  </li>
-<li>ThreadLocal既然是与线程相关的，那么对于Java Web来讲，ThreadLocal设置的值只在一次请求中有效，是不是和request很像？因为request里面的内容也只在一次请求有效，<br>对比一下二者的区别：<ol>
-<li>ThreadLocal只能存一个值，一个Request由于是Map形式的，可以用key-value形式存多个值</li>
-<li>ThreadLocal一般用在框架，Request一般用在表示层、Action、Servlet</li>
-</ol>
+        <h4 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h4><ol>
+<li>给定n个权值作为n个叶子节点，构造一颗二叉树，若该树的带权路径长度（wpl）达到最小，称这样的二叉树为最优二叉树，也称为哈夫曼树（Huffman Tree），也有称为霍夫曼树。</li>
+<li>赫夫曼树是带权路径长度最短的树，权值较大的节点离跟较近。</li>
+<li>路径和路径的长度：在一棵树中，从一个节点往下可以达到的孩子或孙子节点之间的通路，称为路径。通路中分支的数目称为路径长度。若规定根节点的层数为1，则根节点到第L层节点的路径长度为L-1。<a id="more"></a></li>
+<li>节点的权及带权路径长度：若将树中节点赋给一个有着某种意义的数值，则这个数值称为该节点的权。节点的带权路径长度为：从根节点到该节点之间的路径长度与该节点的权的乘积。</li>
+<li>树的带权路径长度：树的带权路径长度规定为所有<font color=red>叶子节点</font>的带权路径长度之和，即为WPL（weighted path length），权值越大的节点离根节点越近的二叉树才是最优二叉树。</li>
+<li>WPL 最小的就是赫夫曼树。  <img src="/images/pasted-11.png" width="80%" />
+如上图所示：中间的为最优二叉树，即为赫夫曼树。  
+
 </li>
 </ol>
-
+<p>如何构建一颗赫夫曼树 步骤：<br>数组：「13，7，8，3，29，6，1」<br>排序  -&gt; 「1，3，6，7，8，13，29」每个数据都是一个节点，每个节点可以看成是一个最简单的二叉树<br>取出根节点权值最小的两颗二叉树，并组成一个新的二叉树，根节点的权值为前面两颗二叉树根几点权值的和。如下图：<br><img src="/images/pasted-12.png" style="height:150px;"/><br>再将这颗新的二叉树以根节点的权值大小再次排序，不断重复知道都被处理。<br><img src="/images/pasted-13.png" width="60%"/><br>最后省略中间画图。。。最后树的样子。。。<br>如下图：<br><img src="/images/pasted-14.png" width="50%"/>  </p>
+<h4 id="上代码"><a href="#上代码" class="headerlink" title="上代码"></a>上代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> erchashu;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Collections;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HuffmanTree</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr = &#123;<span class="number">13</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">3</span>,<span class="number">29</span>,<span class="number">6</span>,<span class="number">1</span>&#125;;</span><br><span class="line">        Node huffmanTree = createHuffmanTree(arr);</span><br><span class="line">        <span class="comment">//前序遍历看一下是不是对的。</span></span><br><span class="line">        preOrder(huffmanTree);</span><br><span class="line">       <span class="comment">/** 运行结果</span></span><br><span class="line"><span class="comment">         * Node&#123;value=67&#125;</span></span><br><span class="line"><span class="comment">         * Node&#123;value=29&#125;</span></span><br><span class="line"><span class="comment">         * Node&#123;value=38&#125;</span></span><br><span class="line"><span class="comment">         * Node&#123;value=15&#125;</span></span><br><span class="line"><span class="comment">         * Node&#123;value=7&#125;</span></span><br><span class="line"><span class="comment">         * Node&#123;value=8&#125;</span></span><br><span class="line"><span class="comment">         * Node&#123;value=23&#125;</span></span><br><span class="line"><span class="comment">         * Node&#123;value=10&#125;</span></span><br><span class="line"><span class="comment">         * Node&#123;value=4&#125;</span></span><br><span class="line"><span class="comment">         * Node&#123;value=1&#125;</span></span><br><span class="line"><span class="comment">         * Node&#123;value=3&#125;</span></span><br><span class="line"><span class="comment">         * Node&#123;value=6&#125;</span></span><br><span class="line"><span class="comment">         * Node&#123;value=13&#125;</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//前序遍历</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">preOrder</span><span class="params">(Node root)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root != <span class="keyword">null</span>)&#123;</span><br><span class="line">            root.preOrder();</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">"空树，不能遍历。。。"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建赫夫曼树的方法</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 赫夫曼树的root节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Node <span class="title">createHuffmanTree</span><span class="params">(<span class="keyword">int</span> [] arr)</span></span>&#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 利用list 将数组的每个元素构建成node，并放入到 list中</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        List&lt;Node&gt; nodes = <span class="keyword">new</span> ArrayList&lt;Node&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> value : arr) &#123;</span><br><span class="line">            nodes.add(<span class="keyword">new</span> Node(value));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (nodes.size() &gt; <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="comment">/** 排序 */</span></span><br><span class="line">            Collections.sort(nodes);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            <span class="comment">/*** 取出根节点权值最小的两颗二叉树 */</span></span><br><span class="line">            Node leftNode = nodes.get(<span class="number">0</span>);</span><br><span class="line">            Node rightNode = nodes.get(<span class="number">1</span>);</span><br><span class="line">            <span class="comment">/** 组成新的二叉树 */</span></span><br><span class="line">            Node parent = <span class="keyword">new</span> Node(leftNode.value + rightNode.value);</span><br><span class="line">            parent.left = leftNode;</span><br><span class="line">            parent.right = rightNode;</span><br><span class="line"></span><br><span class="line">            <span class="comment">/** 删除处理过的二叉树 */</span></span><br><span class="line">            nodes.remove(leftNode);</span><br><span class="line">            nodes.remove(rightNode);</span><br><span class="line"></span><br><span class="line">            <span class="comment">/** 将parent 加入到nodes */</span></span><br><span class="line">            nodes.add(parent);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/** 返回赫夫曼树的root节点即可 **/</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> nodes.get(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建节点</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span> <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">Node</span>&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">int</span> value ; <span class="comment">//节点权值</span></span><br><span class="line">    Node left; <span class="comment">// 左子节点</span></span><br><span class="line">    Node right; <span class="comment">//右子节点</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**前序遍历**/</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">preOrder</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.left != <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">this</span>.left.preOrder();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.right != <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">this</span>.right.preOrder();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Node</span> <span class="params">(<span class="keyword">int</span> value)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Node&#123;"</span> +</span><br><span class="line">                <span class="string">"value="</span> + value +</span><br><span class="line">                <span class="string">'&#125;'</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Node o)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 从小到大排序</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.value - o.value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -369,24 +363,21 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="tag"># 多线程</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"># 数据结构</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/%E5%9B%9B%E7%A7%8Dmysql%E7%9A%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.html" rel="next" title="四种mysql的存储引擎">
-                  <i class="fa fa-chevron-left"></i> 四种mysql的存储引擎
+                <a href="/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%88%E5%A0%86%E6%8E%92%E5%BA%8F%EF%BC%89.html" rel="next" title="二叉树的使用（堆排序）">
+                  <i class="fa fa-chevron-left"></i> 二叉树的使用（堆排序）
                 </a>
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/%E9%A1%BA%E5%BA%8F%E5%AD%98%E5%82%A8%E4%BA%8C%E5%8F%89%E6%A0%91.html" rel="prev" title="顺序存储二叉树">
-                  顺序存储二叉树 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
       </footer>
@@ -455,7 +446,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#threadLocal的简单使用："><span class="nav-number">1.</span> <span class="nav-text">threadLocal的简单使用：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ThreadLocal总结"><span class="nav-number">2.</span> <span class="nav-text">ThreadLocal总结</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本介绍"><span class="nav-number">1.</span> <span class="nav-text">基本介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#上代码"><span class="nav-number">2.</span> <span class="nav-text">上代码</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -777,7 +768,7 @@ NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
       repo: 'tianrun1110.github.io',
       owner: 'tianrun1110',
       admin: ['tianrun1110'],
-      id: '8473bb4e7254ba45d2e3f1e9e2a9e73a',
+      id: 'ed5e6ea15d9a3a123c628116e905a60a',
         language: 'zh-CN',
       distractionFreeMode: 'false'
     });

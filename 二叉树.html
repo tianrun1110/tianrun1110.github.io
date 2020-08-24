@@ -52,16 +52,16 @@
   };
 </script>
 
-  <meta name="description" content="三种遍历方式   前序遍历：先输出父节点，再遍历左子树和右子树 中序遍历：先输出左子树，再输出父节点，再输出右子树 后序遍历：先输出左子树，在输出右子树，再输出父节点   树的示意图  树的常用术语：1.节点2.根节点3.父节点4.子节点5.叶子节点（没有子节点）6.节点的权（节点值）7.路径（从root找到该节点的路线）8.层9.子树10.树的高度（最大层数）11.森林：多棵子树构成森林二叉树的">
+  <meta name="description" content="三种遍历方式    前序遍历：先输出父节点，再遍历左子树和右子树 中序遍历：先输出左子树，再输出父节点，再输出右子树 后序遍历：先输出左子树，在输出右子树，再输出父节点">
 <meta name="keywords" content="数据结构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="二叉树">
 <meta property="og:url" content="https:&#x2F;&#x2F;www.tianrunba.com&#x2F;%E4%BA%8C%E5%8F%89%E6%A0%91.html">
 <meta property="og:site_name" content="tr_oil的博客">
-<meta property="og:description" content="三种遍历方式   前序遍历：先输出父节点，再遍历左子树和右子树 中序遍历：先输出左子树，再输出父节点，再输出右子树 后序遍历：先输出左子树，在输出右子树，再输出父节点   树的示意图  树的常用术语：1.节点2.根节点3.父节点4.子节点5.叶子节点（没有子节点）6.节点的权（节点值）7.路径（从root找到该节点的路线）8.层9.子树10.树的高度（最大层数）11.森林：多棵子树构成森林二叉树的">
+<meta property="og:description" content="三种遍历方式    前序遍历：先输出父节点，再遍历左子树和右子树 中序遍历：先输出左子树，再输出父节点，再输出右子树 后序遍历：先输出左子树，在输出右子树，再输出父节点">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https:&#x2F;&#x2F;www.tianrunba.com&#x2F;images&#x2F;pasted-4.png">
-<meta property="og:updated_time" content="2020-07-28T13:28:38.956Z">
+<meta property="og:updated_time" content="2020-08-09T08:33:17.235Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;www.tianrunba.com&#x2F;images&#x2F;pasted-4.png">
 
@@ -257,10 +257,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-07-28 10:49:00 / 修改时间：21:28:38" itemprop="dateCreated datePublished" datetime="2020-07-28T10:49:00+08:00">2020-07-28</time>
+              <time title="创建时间：2020-07-28 10:49:00" itemprop="dateCreated datePublished" datetime="2020-07-28T10:49:00+08:00">2020-07-28</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-09 16:33:17" itemprop="dateModified" datetime="2020-08-09T16:33:17+08:00">2020-08-09</time>
+              </span>
 
           
             <span id="/%E4%BA%8C%E5%8F%89%E6%A0%91.html" class="post-meta-item leancloud_visitors" data-flag-title="二叉树" title="热度">
@@ -308,22 +314,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>三种遍历方式  </p><ol>
+        <p>三种遍历方式  </p>
+<ol>
 <li>前序遍历：先输出父节点，再遍历左子树和右子树</li>
 <li>中序遍历：先输出左子树，再输出父节点，再输出右子树</li>
-<li>后序遍历：先输出左子树，在输出右子树，再输出父节点  </li>
-</ol><p>树的示意图  </p><p><dev style="
+<li>后序遍历：先输出左子树，在输出右子树，再输出父节点  <a id="more"></a>
+
+</li>
+</ol>
+<p>树的示意图  </p>
+<p><dev style="
     float: left;
     width: 50%;
-"><img src="/images/pasted-4.png"></dev><dev style="
+"><img src="/images/pasted-4.png"/></dev><dev style="
     float: right;
     height: 300px;
     font-size: small;
     width: 48%;
-">树的常用术语：<br>1.节点<br>2.根节点<br>3.父节点<br>4.子节点<br>5.叶子节点（没有子节点）<br>6.节点的权（节点值）<br>7.路径（从root找到该节点的路线）<br>8.层<br>9.子树<br>10.树的高度（最大层数）<br>11.森林：多棵子树构成森林<br></dev><div style="clear:both;"><br>二叉树的概念  </div></p><a id="more"></a>
-
-
-
+">树的常用术语：<br>1.节点<br>2.根节点<br>3.父节点<br>4.子节点<br>5.叶子节点（没有子节点）<br>6.节点的权（节点值）<br>7.路径（从root找到该节点的路线）<br>8.层<br>9.子树<br>10.树的高度（最大层数）<br>11.森林：多棵子树构成森林<br></dev><div style="clear:both;"><br>二叉树的概念  </p>
 <ol>
 <li>每个节点最多只能有两个子节点的树称为二叉树</li>
 <li>二叉树的子节点分为左子节点和右子节点</li>
@@ -465,7 +473,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -521,13 +529,13 @@
       <i class="fa fa-area-chart"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">14k</span>
+    <span title="站点总字数">16k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">12 分钟</span>
+    <span title="站点阅读时长">15 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
   </div>
@@ -734,24 +742,6 @@ if (document.querySelectorAll('div.pdf').length) {
         flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
       new needShareButton('#needsharebutton-float', flOptions);
   </script>
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
-
-<script>
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
-    var gitalk = new Gitalk({
-      clientID: '3b75a606284a2f65a0bc',
-      clientSecret: '056f244da4a5804addb5a8242c4844b0a9afe002',
-      repo: 'tianrun1110.github.io',
-      owner: 'tianrun1110',
-      admin: ['tianrun1110'],
-      id: 'b2022caa5a1500803798b7b796a52a03',
-        language: 'zh-CN',
-      distractionFreeMode: 'false'
-    });
-    gitalk.render('gitalk-container');
-  }, window.Gitalk);
-</script>
-
 
 <script>
 NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
@@ -777,6 +767,24 @@ NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
     serverURLs: ''
   });
 }, window.Valine);
+</script>
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID: '3b75a606284a2f65a0bc',
+      clientSecret: '056f244da4a5804addb5a8242c4844b0a9afe002',
+      repo: 'tianrun1110.github.io',
+      owner: 'tianrun1110',
+      admin: ['tianrun1110'],
+      id: 'b2022caa5a1500803798b7b796a52a03',
+        language: 'zh-CN',
+      distractionFreeMode: 'false'
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
 </script>
 
 </body>
