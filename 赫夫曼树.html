@@ -378,6 +378,9 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+                <a href="/%E8%B5%AB%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81.html" rel="prev" title="赫夫曼编码">
+                  赫夫曼编码 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
       </footer>
@@ -462,7 +465,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -518,13 +521,13 @@
       <i class="fa fa-area-chart"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">16k</span>
+    <span title="站点总字数">22k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">15 分钟</span>
+    <span title="站点阅读时长">20 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
   </div>
@@ -717,7 +720,25 @@ if (document.querySelectorAll('div.pdf').length) {
 
   <script async src="/js/cursor/fireworks.js"></script>
 
-  <div id="needsharebutton-float">
+  
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID: '3b75a606284a2f65a0bc',
+      clientSecret: '056f244da4a5804addb5a8242c4844b0a9afe002',
+      repo: 'tianrun1110.github.io',
+      owner: 'tianrun1110',
+      admin: ['tianrun1110'],
+      id: 'ed5e6ea15d9a3a123c628116e905a60a',
+        language: 'zh-CN',
+      distractionFreeMode: 'false'
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+</script>
+<div id="needsharebutton-float">
       <span class="btn">
         <i class="fa fa-share-alt" aria-hidden="true"></i>
       </span>
@@ -756,24 +777,6 @@ NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
     serverURLs: ''
   });
 }, window.Valine);
-</script>
-
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
-
-<script>
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
-    var gitalk = new Gitalk({
-      clientID: '3b75a606284a2f65a0bc',
-      clientSecret: '056f244da4a5804addb5a8242c4844b0a9afe002',
-      repo: 'tianrun1110.github.io',
-      owner: 'tianrun1110',
-      admin: ['tianrun1110'],
-      id: 'ed5e6ea15d9a3a123c628116e905a60a',
-        language: 'zh-CN',
-      distractionFreeMode: 'false'
-    });
-    gitalk.render('gitalk-container');
-  }, window.Gitalk);
 </script>
 
 </body>

@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.2">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=7.4.2">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png?v=7.4.2">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.2" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.2">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css?v=1.0.2">
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="赫夫曼编码是电讯通信中的经典应用之一。赫夫曼编码用于数据文件压缩。其压缩率通常在20%～90%之间。赫夫曼编码是可变字长编码（VLC）的一种。">
+<meta name="keywords" content="数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="赫夫曼编码">
+<meta property="og:url" content="https:&#x2F;&#x2F;www.tianrunba.com&#x2F;%E8%B5%AB%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81.html">
+<meta property="og:site_name" content="tr_oil的博客">
+<meta property="og:description" content="赫夫曼编码是电讯通信中的经典应用之一。赫夫曼编码用于数据文件压缩。其压缩率通常在20%～90%之间。赫夫曼编码是可变字长编码（VLC）的一种。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;www.tianrunba.com&#x2F;images&#x2F;pasted-15.png">
+<meta property="og:updated_time" content="2020-08-26T23:37:43.198Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;www.tianrunba.com&#x2F;images&#x2F;pasted-15.png">
+
+<link rel="canonical" href="https://www.tianrunba.com/%E8%B5%AB%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/ilyabirman-likely@2/release/likely.min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.css"><style>
+#needsharebutton-float {
+  bottom: 88px;
+  cursor: pointer;
+  left: -8px;
+  position: fixed;
+  z-index: 9999;
+}
+#needsharebutton-float .btn {
+  border: 1px solid $btn-default-border-color;
+  border-radius: 4px;
+  padding: 0 10px 0 14px;
+}
+</style>
+  <title>赫夫曼编码 | tr_oil的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">tr_oil的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">点点滴滴，一波又一波，学习使我进步</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <img src="top1.png" style="height:100px;">
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.tianrunba.com/%E8%B5%AB%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="tianrun">
+      <meta itemprop="description" content="点点滴滴，一波又一波，学习使我进步">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tr_oil的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          赫夫曼编码
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-25 10:42:00" itemprop="dateCreated datePublished" datetime="2020-08-25T10:42:00+08:00">2020-08-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-27 07:37:43" itemprop="dateModified" datetime="2020-08-27T07:37:43+08:00">2020-08-27</time>
+              </span>
+
+          
+            <span id="/%E8%B5%AB%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81.html" class="post-meta-item leancloud_visitors" data-flag-title="赫夫曼编码" title="热度">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">热度：</span>
+              <span class="leancloud-visitors-count"></span><span>℃</span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/%E8%B5%AB%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81.html#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/%E8%B5%AB%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>赫夫曼编码是电讯通信中的经典应用之一。<br>赫夫曼编码用于数据文件压缩。其压缩率通常在20%～90%之间。<br>赫夫曼编码是可变字长编码（VLC）的一种。  <a id="more"></a></p>
+<h5 id="例子："><a href="#例子：" class="headerlink" title="例子："></a>例子：</h5><p><code>i like like like java do you like a java</code><br>将字符的个数对应起来：d:1 y:1 u:1 j:2 v:2 o:2 l:4 k:4 e:4 i:5 a:5 (空格):9<br>按照上面字符出现的次数构建一颗赫夫曼树，次数为权值。<br><a href="./%E8%B5%AB%E5%A4%AB%E6%9B%BC%E6%A0%91.html">链接：构建赫夫曼树</a><br><img src='/images/pasted-15.png' width='60%'/><br>根据赫夫曼树，给各个字符规定编码，向左的路径为0，向右的路径为1，如上图所示。<br>编码如下：<br>o:1000 u:10010 d:100110 y:100111 i:101 a:110 k:1110 e:1111 j:0000 v:0001 l:001 (空格):01<br>按照赫夫曼编码，<code>i like like like java do you like a java</code>的编码为（无损压缩）：<br>10101001101111011110100110111101111010011011110111101000011000011100110011110000110011110001001001001101111011100100001100001110  长度为133<br>不压缩长度为：359<br><strong>注意：</strong><br><strong>赫夫曼树根据排序不同，也可能不太一样，这样对应的赫夫曼编码也是不完全一样的，但是wql是一样的，并且都是最小的。</strong>  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> erchashu.huffmancode;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Type;</span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HuffmanCode</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String str = <span class="string">"i like like like java do you like a java"</span>;</span><br><span class="line">        <span class="keyword">byte</span>[] contentBytes = str.getBytes();</span><br><span class="line">        System.out.println(<span class="string">"byte长度："</span>+contentBytes.length);</span><br><span class="line">        List&lt;Node&gt; nodes = getNodes(contentBytes);</span><br><span class="line">        <span class="comment">//创建赫夫曼树</span></span><br><span class="line">        Node huffmanTree = createHuffmanTree(nodes);</span><br><span class="line">        huffmanTree.preOrder();</span><br><span class="line">        <span class="comment">//测试 生成赫夫曼编码</span></span><br><span class="line">        getCodes(huffmanTree);</span><br><span class="line">        System.out.println(<span class="string">"赫夫曼编码为："</span> + huffmanCodes);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">byte</span>[] huffmanCodeBytes = zip(contentBytes, huffmanCodes);</span><br><span class="line">        System.out.println(<span class="string">"压缩过后字节"</span>+ Arrays.toString(huffmanCodeBytes));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 将字符串对应的Byte[]数组，通过生成的赫夫曼编码表，返回赫夫曼编码 压缩后的byte[]</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> bytes  原始的字符串对应的byte[]</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> huffmanCodes  生成的赫夫曼编码map</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span>   返回赫夫曼编码处理后的byte[]</span></span><br><span class="line"><span class="comment">     * 例如：i like like like java do you like a java</span></span><br><span class="line"><span class="comment">     * 返回的是：10101001101111011110100110111101111010011011110111101000011000011100110011110000110011110001001001001101111011100100001100001110</span></span><br><span class="line"><span class="comment">     * 8为对应一个byte 放到 byte[]中</span></span><br><span class="line"><span class="comment">     * huffmanCodeBytes[0] = 10101000(补码) ==&gt; 10101000 -1 = 10100111(反码) = 11011000(原码) = -88</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] zip(<span class="keyword">byte</span>[] bytes, Map&lt;Byte , String&gt; huffmanCodes)&#123;</span><br><span class="line">        <span class="comment">/**先利用huffmanCodes 将 bytes 转成 赫夫曼编码对应的字符串**/</span></span><br><span class="line">        StringBuilder stringBuilder = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">byte</span> b : bytes) &#123;</span><br><span class="line">            stringBuilder.append(huffmanCodes.get(b));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/** 将 stringBuilder 字符串 转成byte[]   也可以这么写：int len = (stringBuilder.length() + 7) / 8 **/</span></span><br><span class="line">        <span class="keyword">int</span> len;</span><br><span class="line">        <span class="keyword">if</span> (stringBuilder.length() % <span class="number">8</span> == <span class="number">0</span>)&#123;</span><br><span class="line">            len = stringBuilder.length() / <span class="number">8</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            len = stringBuilder.length() / <span class="number">8</span> + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">byte</span>[] huffmanCodeBytes = <span class="keyword">new</span> <span class="keyword">byte</span>[len];</span><br><span class="line">        <span class="keyword">int</span> index = <span class="number">0</span>; <span class="comment">// 记录第几个byte</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; stringBuilder.length() ; i+=<span class="number">8</span>)&#123;</span><br><span class="line">            String strByte;</span><br><span class="line">            <span class="keyword">if</span> (i+<span class="number">8</span> &gt; stringBuilder.length())&#123; <span class="comment">//最后不够8位了</span></span><br><span class="line">                strByte = stringBuilder.substring(i);</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                strByte = stringBuilder.substring(i, i + <span class="number">8</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            huffmanCodeBytes[index] = (<span class="keyword">byte</span>)Integer.parseInt(strByte,<span class="number">2</span>);</span><br><span class="line">            index++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> huffmanCodeBytes;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 生成赫夫曼树对应的赫夫曼编码</span></span><br><span class="line"><span class="comment">     * 思路：</span></span><br><span class="line"><span class="comment">     * 1  将赫夫曼编码存到Map&lt;Byte,String&gt;</span></span><br><span class="line"><span class="comment">     *     如：</span></span><br><span class="line"><span class="comment">     *        32=01, 97=100, 100=11000, 117=11001, 101=1110, 118=11011, 105=101, 121=11010, 106=0010, 107=1111, 108=000, 111=0011</span></span><br><span class="line"><span class="comment">     * 2  在生成赫夫曼编码表示，需要去拼接路径，定义一个StringBuilder  存储某个叶子节点的路径</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">static</span> Map&lt;Byte,String&gt; huffmanCodes = <span class="keyword">new</span> HashMap&lt;Byte, String&gt;();</span><br><span class="line">    <span class="keyword">static</span> StringBuilder stringBuilder = <span class="keyword">new</span> StringBuilder();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Map&lt;Byte,String&gt; <span class="title">getCodes</span><span class="params">(Node root)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        getCodes(root.left , <span class="string">"0"</span> , stringBuilder);</span><br><span class="line">        getCodes(root.right , <span class="string">"1"</span> , stringBuilder);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> huffmanCodes;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 将传入的弄的节点的所有叶子节点的赫夫曼编码得到，并放入到huffmanCodes 集合中</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> node   传入节点</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> code   路径：左子节点是0，右子节点是1</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> stringBuilder   拼接路径</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getCodes</span><span class="params">(Node node , String code , StringBuilder stringBuilder)</span></span>&#123;</span><br><span class="line">        StringBuilder stringBuilder2 = <span class="keyword">new</span> StringBuilder(stringBuilder);</span><br><span class="line">        <span class="comment">/**将code加入到stringBuilder2**/</span></span><br><span class="line">        stringBuilder2.append(code);</span><br><span class="line">        <span class="keyword">if</span> (node != <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span> (node.data == <span class="keyword">null</span>) &#123;<span class="comment">// 非叶子节点</span></span><br><span class="line">                <span class="comment">//向左递归</span></span><br><span class="line">                getCodes(node.left,<span class="string">"0"</span> , stringBuilder2);</span><br><span class="line">                <span class="comment">//向右递归</span></span><br><span class="line">                getCodes(node.right, <span class="string">"1"</span> , stringBuilder2);</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;<span class="comment">// 是叶子节点</span></span><br><span class="line">                <span class="comment">//表示找到了 某个叶子节点的最后</span></span><br><span class="line">                huffmanCodes.put(node.data , stringBuilder2.toString());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> bytes   接受字节数组</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span>    返回list</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> List&lt;Node&gt; <span class="title">getNodes</span><span class="params">(<span class="keyword">byte</span>[] bytes)</span></span>&#123;</span><br><span class="line">        List&lt;Node&gt; nodes = <span class="keyword">new</span> ArrayList&lt;Node&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//遍历 bytes ，统计 每一个 byte出现的次数  --&gt; map[key,value]</span></span><br><span class="line">        Map&lt;Byte,Integer&gt; counts = <span class="keyword">new</span> HashMap&lt;Byte, Integer&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">byte</span> b : bytes) &#123;</span><br><span class="line">            Integer count = counts.get(b);</span><br><span class="line">            <span class="keyword">if</span> (count == <span class="keyword">null</span>)&#123;</span><br><span class="line">                counts.put(b,<span class="number">1</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                counts.put(b,count+<span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (Map.Entry&lt;Byte, Integer&gt; entry : counts.entrySet()) &#123;</span><br><span class="line">            nodes.add(<span class="keyword">new</span> Node(entry.getKey() , entry.getValue()));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> nodes;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//通过 list 创建 赫夫曼树</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Node <span class="title">createHuffmanTree</span><span class="params">(List&lt;Node&gt; nodes)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (nodes.size() &gt; <span class="number">1</span>)&#123;</span><br><span class="line">            Collections.sort(nodes);</span><br><span class="line">            <span class="comment">//取出第一颗最小的二叉树</span></span><br><span class="line">            Node leftNode = nodes.get(<span class="number">0</span>);</span><br><span class="line">            Node rightNode = nodes.get(<span class="number">1</span>);<span class="comment">//取出第二颗最小的二叉树</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">/**创建的新的二叉树 ， 它的根节点是没有 data 的，只有权值**/</span></span><br><span class="line">            Node parent = <span class="keyword">new</span> Node(<span class="keyword">null</span> , leftNode.weight + rightNode.weight);</span><br><span class="line">            parent.left = leftNode;</span><br><span class="line">            parent.right = rightNode;</span><br><span class="line"></span><br><span class="line">            <span class="comment">/**将已处理的两个节点从nodes 删除**/</span></span><br><span class="line">            nodes.remove(leftNode);</span><br><span class="line">            nodes.remove(rightNode);</span><br><span class="line">            <span class="comment">/**将新的二叉树 ，加入到nodes**/</span></span><br><span class="line">            nodes.add(parent);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/**直接返回根节点**/</span></span><br><span class="line">        <span class="keyword">return</span> nodes.get(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 前序遍历的方法</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> root</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">preOrder</span><span class="params">(Node root)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root != <span class="keyword">null</span>)&#123;</span><br><span class="line">            root.preOrder();</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">"赫夫曼树为空。。。"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span>  <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">Node</span>&gt;</span>&#123;</span><br><span class="line">    Byte data ; <span class="comment">// 存放数据本身，比如：'a' =&gt; 97</span></span><br><span class="line">    <span class="keyword">int</span> weight; <span class="comment">//权值 ， 表示字符出现的次数</span></span><br><span class="line">    Node left;</span><br><span class="line">    Node right;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(Byte data, <span class="keyword">int</span> weight)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.data = data;</span><br><span class="line">        <span class="keyword">this</span>.weight = weight;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Node o)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//  从小到大排序</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.weight - o.weight;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Node&#123;"</span> +</span><br><span class="line">                <span class="string">"data="</span> + data +</span><br><span class="line">                <span class="string">", weight="</span> + weight +</span><br><span class="line">                <span class="string">'&#125;'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 前序遍历</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">preOrder</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.left != <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">this</span>.left.preOrder();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.right != <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">this</span>.right.preOrder();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>缺少解压代码。。。后面补上。。。</p>
+
+    </div>
+
+    
+    
+    <div class="post-widgets">
+    <div class="likelylikely-light">
+    </div>
+  </div>
+  <script src="//cdn.jsdelivr.net/npm/ilyabirman-likely@2/release/likely.min.js"></script>
+      
+        <div class="reward-container">
+  <div></div>
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="tianrun 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tianrun 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"># 数据结构</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/%E8%B5%AB%E5%A4%AB%E6%9B%BC%E6%A0%91.html" rel="next" title="赫夫曼树">
+                  <i class="fa fa-chevron-left"></i> 赫夫曼树
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+      <div class="tabs tabs-comment">
+        <ul class="nav-tabs">
+            <li class="tab"><a href="#comment-valine">欢迎评论“请点击”（无需登录）</a></li>
+            <li class="tab"><a href="#comment-gitalk">欢迎评论“请点击”（需要登陆，建议）</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane valine" id="comment-valine">
+              <div class="comments" id="comments"></div>
+            </div>
+            <div class="tab-pane gitalk" id="comment-gitalk">
+              <div class="comments" id="gitalk-container"></div>
+            </div>
+        </div>
+      </div>
+      <script>
+        window.addEventListener('tabs:register', () => {
+          let activeClass = 'valine';
+            activeClass = localStorage.getItem('comments_active') || activeClass;
+          if (activeClass) {
+            let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+            if (activeTab) {
+              activeTab.click();
+            }
+          }
+        });
+        window.addEventListener('tabs:click', event => {
+          let commentClass = event.target.classList[1];
+          localStorage.setItem('comments_active', commentClass);
+        });
+      </script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#例子："><span class="nav-number">1.</span> <span class="nav-text">例子：</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="tianrun"
+    src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">tianrun</p>
+  <div class="site-description" itemprop="description">点点滴滴，一波又一波，学习使我进步</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:tea_tr@163.com" title="E-Mail &amp;rarr; mailto:tea_tr@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.weibo.com/u/2359575445" title="Weibo &amp;rarr; https:&#x2F;&#x2F;www.weibo.com&#x2F;u&#x2F;2359575445" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tianrun</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">22k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">20 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.2
+  </div>
+
+        
+
+
+
+
+
+
+  
+  <script>
+  function leancloudSelector(url) {
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = visitors.getAttribute('id').trim();
+      var title = visitors.getAttribute('data-flag-title').trim();
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.log('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title: title, url: decodeURI(url), time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.log('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return element.getAttribute('id').trim();
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.url;
+            var time = item.time;
+            leancloudSelector(encodeURI(url)).innerText = time;
+          }
+          for (var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=NeOJ4J8mlI1twzlzk9tsXQRk-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method: method,
+          headers: {
+            'X-LC-Id': 'NeOJ4J8mlI1twzlzk9tsXQRk-gzGzoHsz',
+            'X-LC-Key': 'SbA09AUT3HK1ANre8u0ieXmw',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        const localhost = /http:\/\/(localhost|127.0.0.1|0.0.0.0)/;
+        if (localhost.test(document.URL)) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.2"></script><script src="/js/motion.js?v=7.4.2"></script>
+<script src="/js/schemes/pisces.js?v=7.4.2"></script>
+<script src="/js/next-boot.js?v=7.4.2"></script>
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.2"></script>
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes: 0,
+          toolbar: 0,
+          statusbar: 0,
+          pagemode: 'thumbs',
+          view: 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height: element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+  
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID: '3b75a606284a2f65a0bc',
+      clientSecret: '056f244da4a5804addb5a8242c4844b0a9afe002',
+      repo: 'tianrun1110.github.io',
+      owner: 'tianrun1110',
+      admin: ['tianrun1110'],
+      id: '2e4b89536537d2b666192912a2875538',
+        language: 'zh-CN',
+      distractionFreeMode: 'false'
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+</script>
+<div id="needsharebutton-float">
+      <span class="btn">
+        <i class="fa fa-share-alt" aria-hidden="true"></i>
+      </span>
+    </div>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.js"></script>
+  <script>
+      flOptions = {};
+        flOptions.iconStyle = "box";
+        flOptions.boxForm = "horizontal";
+        flOptions.position = "middleRight";
+        flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      new needShareButton('#needsharebutton-float', flOptions);
+  </script>
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: '94r0EYM9i7Km3secE0WPdXBk-gzGzoHsz',
+    appKey: 'BBM8xHf3MvSYyDFDKqomxmK0',
+    placeholder: "😄看完之后，评个论再走？？？？建议填写邮箱，方便联系☺️",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: 'zh-cn' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>
